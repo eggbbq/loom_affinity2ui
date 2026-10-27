@@ -1,0 +1,6 @@
+{
+  "pages": {
+    "TaskPanel": {"x": "center", "y": "bottom"},
+    "LoginPanel": {"x": "center", "y": "center"}
+  }
+}

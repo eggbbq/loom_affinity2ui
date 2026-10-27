@@ -1,0 +1,8 @@
+{
+  "name": "loom-affinity2ui-validation",
+  "private": true,
+  "description": "Affinity export nine-grid validation in the installed LayaAir engine",
+  "dependencies": {
+    "playwright": "1.64.1"
+  }
+}

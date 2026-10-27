@@ -1,0 +1,25 @@
+# 所有相对路径均以 --workspace（默认当前目录）为基准。
+[paths]
+project = "client"
+assets = "client/assets/ui"
+sources = "art/ui/pages"
+records = "out/affinity-export"
+reports = "out/ui-export-reports"
+
+[export]
+workers = 2
+ninegrid_mode = "visual"
+ninegrid_ignore_names = ["icon", "ico", "图标"]
+dedupe_similarity = 0.99
+pixel_grid = true
+button_down_effect = "dark"
+strict = false
+
+[layout]
+content_align_x = ""
+content_align_y = ""
+content_align_config = ""
+
+[checks]
+resize = true
+repair_records = []

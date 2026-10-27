@@ -1,0 +1,1 @@
+psd2ui / ninegrid companion backend: upstream https://github.com/eggbbq/loom_psd2ui. No license file was present in the source snapshot; no third-party license is invented here. Its redistribution terms must be confirmed before public release. Pillow, NumPy, psd-tools and Playwright retain their own distribution licenses.

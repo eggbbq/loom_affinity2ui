@@ -1,0 +1,9 @@
+include README.md CHANGELOG.md LICENSE
+recursive-include src/affinity2ui *.js *.mjs *.json *.ts *.toml
+recursive-include tests *.py
+recursive-include scripts *.py
+recursive-include vendor *.whl *.json *LICENSE*
+prune out
+prune release
+prune .venv
+global-exclude __pycache__ *.py[cod] node_modules

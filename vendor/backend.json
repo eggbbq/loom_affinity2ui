@@ -1,0 +1,10 @@
+{
+  "distribution": "psd2ui",
+  "version": "1.1.0+loom.20261027",
+  "file": "psd2ui-1.1.0+loom.20261027-py3-none-any.whl",
+  "sha256": "89736bcfe016b1fd3aa1fb5f1cdd257a696e750573e7a059f19b2efc3dba7d68",
+  "upstream": "https://github.com/eggbbq/loom_psd2ui",
+  "sourceCommit": "b7545959c9ef714b980aab5ab49113c74000eacc",
+  "sourceTreeDigest": "12808b4f07cbac5184ae27758faf0e39280316f7b7392713e2cdfd73a938060e",
+  "note": "Snapshot includes actual local source changes, not only the commit. Companion wheel for private/local installation; local version is not a public PyPI release."
+}

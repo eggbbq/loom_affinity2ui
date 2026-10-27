@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "version": "0.1.0",
+  "valid": true,
+  "date": "2026-10-27",
+  "unitTests": 111,
+  "isolatedInstallationSteps": 16,
+  "engineCases": 8,
+  "engine": "LayaAir 3.4.2 / Chrome WebGL",
+  "platform": "macOS arm64 / CPython 3.12",
+  "offlinePythonInstallAndSdistRebuild": true,
+  "nodeRuntimeCacheOutsidePackage": true,
+  "limits": [
+    "AF source is simulated; this release validation does not re-verify native Affinity rendering.",
+    "Node/npm runtime installation uses its own registry or cache."
+  ],
+  "artifacts": {
+    "loom_affinity2ui-0.1.0-py3-none-any.whl": "da0ade795c573be91d98d5ccdcf986228e93169c29b95b35c02f40be4aeaaf19",
+    "psd2ui-1.1.0+loom.20261027-py3-none-any.whl": "89736bcfe016b1fd3aa1fb5f1cdd257a696e750573e7a059f19b2efc3dba7d68",
+    "loom_affinity2ui-0.1.0.tar.gz": "688a1ee0056ac9d1da6d16adda617cb678d526f0c1aaaffa98ce79943891a8a3"
+  }
+}
