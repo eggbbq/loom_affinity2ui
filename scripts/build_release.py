@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tomllib
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -17,17 +18,28 @@ def main():
     parser.add_argument('--bundle-dependencies', action='store_true', help='下载当前 Python/平台的依赖 wheels，用于离线安装')
     args = parser.parse_args()
     os.chdir(ROOT)
-    provenance = json.loads((ROOT/'vendor/backend.json').read_text())
-    backend = ROOT/'vendor/wheels'/provenance['file']
-    if hashlib.sha256(backend.read_bytes()).hexdigest() != provenance['sha256']:
-        raise SystemExit('后端 wheel 校验失败')
+    dependencies = []
+    for metadata in ('image9grid.json',):
+        provenance = json.loads((ROOT/'vendor'/metadata).read_text())
+        artifact = ROOT/'vendor/wheels'/provenance['file']
+        if hashlib.sha256(artifact.read_bytes()).hexdigest() != provenance['sha256']:
+            raise SystemExit(f'{metadata} wheel 校验失败')
+        dependencies.append(artifact)
+    version = tomllib.loads((ROOT/'pyproject.toml').read_text())['project']['version']
+    for path in ('dist', 'build'):
+        shutil.rmtree(ROOT/path, ignore_errors=True)
     subprocess.run([sys.executable,'-m','build','--no-isolation'], check=True)
-    release = ROOT/'release';wheels = release/'wheels';wheels.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(backend, wheels/backend.name)
+    # This is generated staging only. Start fresh so retired dependencies cannot
+    # remain in the offline bundle after a dependency is removed.
+    release = ROOT/'release'
+    shutil.rmtree(release, ignore_errors=True)
+    wheels = release/'wheels';wheels.mkdir(parents=True, exist_ok=True)
+    for dependency in dependencies:
+        shutil.copy2(dependency, wheels/dependency.name)
     for artifact in (ROOT/'dist').iterdir():
         shutil.copy2(artifact, (wheels if artifact.suffix == '.whl' else release)/artifact.name)
     if args.bundle_dependencies:
-        main_wheel = next((ROOT/'dist').glob('loom_affinity2ui-0.1.0-*.whl'))
+        main_wheel = next((ROOT/'dist').glob(f'loom_affinity2ui-{version}-*.whl'))
         subprocess.run([sys.executable,'-m','pip','download','--only-binary=:all:',
                         '--find-links',str(wheels),'--dest',str(wheels),str(main_wheel)], check=True)
         # pip builds sdist in an isolated environment; ship its build backend

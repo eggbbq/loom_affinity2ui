@@ -4,7 +4,7 @@ import hashlib
 from pathlib import Path, PurePosixPath
 import shutil
 
-from psd2ui.laya_prefab import write_json
+from .prefab import write_json
 from .image_names import ImageNames, SCHEME, flat_image_name
 
 

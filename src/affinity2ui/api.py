@@ -9,7 +9,7 @@ _WORKSPACE_LOCK = threading.RLock()
 
 @contextmanager
 def workspace_directory(workspace):
-    """The reused backend captures cwd during import; initialize it in workspace.
+    """Resolve legacy relative paths consistently inside the explicit workspace.
 
     This context restores cwd on success and failure. Calls are process-local;
     use separate processes for concurrent exports in different workspaces.

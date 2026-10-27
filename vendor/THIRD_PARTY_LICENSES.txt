@@ -1,1 +1,3 @@
-psd2ui / ninegrid companion backend: upstream https://github.com/eggbbq/loom_psd2ui. No license file was present in the source snapshot; no third-party license is invented here. Its redistribution terms must be confirmed before public release. Pillow, NumPy, psd-tools and Playwright retain their own distribution licenses.
+Internally ported serialization/metadata/dedupe helpers: upstream https://github.com/eggbbq/loom_psd2ui. No license file was present in the source snapshot; no third-party license is invented here. See prefab-origin.json; no psd2ui distribution is bundled.
+loom-image9grid 1.1.0: official, unmodified wheel from https://github.com/eggbbq/loom_image9grid/releases/tag/v1.1.0. No license file or license declaration is present in the official wheel; no open-source license is inferred. See vendor/image9grid.json for verified provenance.
+Pillow, NumPy and Playwright retain their own distribution licenses.

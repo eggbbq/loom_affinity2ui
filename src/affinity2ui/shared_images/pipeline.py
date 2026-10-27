@@ -39,7 +39,7 @@ def commit(pairs,rollback):
 
 
 def run(project,assets,state_dir,*,threshold=.99,preferred=None,fresh_prefabs=(),restore_only=False,source_records=()):
-    from psd2ui.deduplication import similarity_threshold
+    from ..image_dedupe import similarity_threshold
     threshold=similarity_threshold(threshold)
     project,assets,state_dir=map(lambda p:Path(p).resolve(),(project,assets,state_dir))
     if (not assets.is_relative_to(project/'assets') or state_dir.is_relative_to(project)

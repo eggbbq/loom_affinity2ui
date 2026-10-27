@@ -1,5 +1,5 @@
 """Named component parts checked against the project's LayaAir 3.4.2 APIs."""
-from psd2ui.laya_types import NEW_UI_TYPES
+from .laya_types import NEW_UI_TYPES
 
 
 LABEL_TYPES = {'GLabel', 'GButton', 'GComboBox'}

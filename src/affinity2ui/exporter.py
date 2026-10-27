@@ -7,9 +7,9 @@ import shutil
 import tempfile
 
 from PIL import Image
-from psd2ui.deduplication import deduplicate_images, image_nodes
-from psd2ui.laya_prefab import generate_prefab, write_json
-from psd2ui.run_export import preserve_metadata
+from .image_dedupe import deduplicate_images, image_nodes
+from .prefab import generate_prefab, write_json
+from .metadata import preserve_metadata
 
 from .layout import LayoutBuilder, page_roots, patch_prefab, apply_page_relations, BUTTON_DOWN_EFFECTS
 from .ninegrid import optimize

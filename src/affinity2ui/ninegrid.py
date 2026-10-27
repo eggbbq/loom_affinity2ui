@@ -31,7 +31,7 @@ def optimize(stage_project, staged, original_project, mode, workers, engine_dir,
     from ninegrid.pipeline import build, apply
     from ninegrid.verify import verify_project
     from ninegrid.run_9grid import print_report
-    from psd2ui.laya_prefab import write_json
+    from .prefab import write_json
     from .ninegrid_names import configured_ignore_names, normalize_ignored_names
     ignore_names=configured_ignore_names() if ignore_names is None else normalize_ignored_names(ignore_names)
     versions = {json.loads(p.read_text(encoding='utf-8'))['version'] for p in original_project.glob('*.laya')}
@@ -131,10 +131,10 @@ def validate_engine(adapter, entries, libraries, version, pool):
     old = "if (Laya.LayaEnv.version !== '3.4.1') throw new Error('Unverified engine version');"
     dynamic = "if (Laya.LayaEnv.version !== version) throw new Error('Unverified engine version');"
     if source.count(old) != 1:
-        # The pinned 1.1 backend passes version into page.evaluate. Keep its
+        # The pinned independent image9grid release passes version into page.evaluate. Keep its
         # guard unchanged and supply the validated project version in payload.
         if (source.count(dynamic) != 1
-                or source.count("version:config.version||'3.4.1'") != 1
+                or source.count('version:config.version}') != 1
                 or source.count('async ({width, height, version})') != 1):
             raise ValueError('NineGrid 引擎探针接口已变化，需要重新适配')
         old = dynamic

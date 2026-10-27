@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "loom-affinity2ui"
-version = "0.1.0"
+version = "0.1.1"
 description = "Read-only Affinity to LayaAir UI export, optimization and shared resource workflow"
 readme = "README.md"
 requires-python = ">=3.12"
 license = "LicenseRef-Proprietary"
-dependencies = ["psd2ui==1.1.0+loom.20261027", "Pillow>=10.3,<14", "numpy>=1.26,<3"]
+dependencies = ["loom-image9grid==1.1.0", "Pillow>=10.3,<14", "numpy>=1.26,<3"]
 
 [project.optional-dependencies]
 dev = ["build>=1.2", "twine>=6"]

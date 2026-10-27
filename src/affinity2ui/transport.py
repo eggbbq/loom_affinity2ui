@@ -84,7 +84,7 @@ class AffinitySSE:
     def initialize(self):
         result = self.request('initialize', {
             'protocolVersion': '2025-11-25', 'capabilities': {},
-            'clientInfo': {'name': 'loom-affinity2ui', 'version': '0.1.0'}})
+            'clientInfo': {'name': 'loom-affinity2ui', 'version': '0.1.1'}})
         if 'error' in result:
             raise RuntimeError(result['error'])
         self.request('notifications/initialized', notify=True)

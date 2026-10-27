@@ -10,25 +10,27 @@
 
 ## 安装发行包
 
-正式发行渠道为 [GitHub Release v0.1.0](https://github.com/eggbbq/loom_affinity2ui/releases/tag/v0.1.0)，未发布到 PyPI。主包使用经过快照校验的 `psd2ui==1.1.0+loom.20261027` 后端（包含 NineGrid）；这个本地版本和主包一起提供，不能假定 PyPI 上同版本数字的普通 psd2ui 含相同修复。
+正式发行渠道为 [GitHub Release v0.1.1](https://github.com/eggbbq/loom_affinity2ui/releases/tag/v0.1.1)，未发布到 PyPI。预制体序列化、布局验证、资源 metadata 和相似图去重由本库内部模块实现，不安装或导入 `psd2ui`、`psd-tools`。保留已有 UUID 命名空间、节点 ID 和组件规则，升级不会因为模块归属变化而重建资源身份。
+
+九宫格来自独立的 [loom-image9grid v1.1.0](https://github.com/eggbbq/loom_image9grid/releases/tag/v1.1.0)，官方 wheel 保持原样，SHA256 固定为 `dc63c5401f01d1410d8a83a91e882c1fae9994a97752c35dffb66ad063345cf6`。算法命名空间 `ninegrid` 的唯一提供者为 `loom-image9grid==1.1.0`。升级旧环境时建议重新创建虚拟环境，避免旧版 psd2ui 内置的同名文件残留。
 
 在线安装固定发行资产：
 
 ```sh
 python3.12 -m venv .venv
 .venv/bin/python -m pip install \
-  'https://github.com/eggbbq/loom_affinity2ui/releases/download/v0.1.0/psd2ui-1.1.0%2Bloom.20261027-py3-none-any.whl' \
-  'https://github.com/eggbbq/loom_affinity2ui/releases/download/v0.1.0/loom_affinity2ui-0.1.0-py3-none-any.whl'
+  'https://github.com/eggbbq/loom_image9grid/releases/download/v1.1.0/loom_image9grid-1.1.0-py3-none-any.whl' \
+  'https://github.com/eggbbq/loom_affinity2ui/releases/download/v0.1.1/loom_affinity2ui-0.1.1-py3-none-any.whl'
 ```
 
 发布资产中的 `SHA256.json` 记录主包、源码包及 wheel bundle 的逐文件校验和。用于工程锁定时，应下载发行资产并同时校验固定 SHA256，不从开发分支或本机目录隐式加载。
 
-macOS arm64 / CPython 3.12 可下载同一 Release 中的 `loom-affinity2ui-0.1.0-macos-arm64-cp312.zip`，解压后按下方离线安装方式使用；Node/npm 验证运行时仍需单独安装或使用本机缓存。
+macOS arm64 / CPython 3.12 可下载同一 Release 中的 `loom-affinity2ui-0.1.1-macos-arm64-cp312.zip`，解压后按下方离线安装方式使用；Node/npm 验证运行时仍需单独安装或使用本机缓存。
 
 ```sh
 python3.12 -m venv .venv
-# release/wheels 中提供主包、精确后端及当前构建平台的全部 Python 依赖。
-.venv/bin/python -m pip install --no-index --find-links /path/to/release/wheels loom-affinity2ui==0.1.0
+# release/wheels 中提供主包、官方算法及当前构建平台的全部 Python 依赖。
+.venv/bin/python -m pip install --no-index --find-links /path/to/release/wheels loom-affinity2ui==0.1.1
 .venv/bin/affinity2ui --version
 .venv/bin/affinity2ui doctor
 ```
@@ -36,10 +38,10 @@ python3.12 -m venv .venv
 也可单独安装两个纯 Python wheel，让 pip 从已有镜像解析其常规依赖：
 
 ```sh
-python -m pip install psd2ui-1.1.0+loom.20261027-py3-none-any.whl loom_affinity2ui-0.1.0-py3-none-any.whl
+python -m pip install loom_image9grid-1.1.0-py3-none-any.whl loom_affinity2ui-0.1.1-py3-none-any.whl
 ```
 
-主包与后端 wheel 是跨平台的 Python 包；离线 bundle 中 NumPy/Pillow 等二进制 wheels 对应打包时的 Python 和平台。其它环境需要重新下载适用的依赖 wheels。
+主包与算法 wheel 是跨平台的 Python 包；离线 bundle 中 NumPy/Pillow 等二进制 wheels 对应打包时的 Python 和平台。其它环境需要重新下载适用的依赖 wheels。
 
 安装验证运行时一次：
 
@@ -126,8 +128,6 @@ python scripts/build_release.py --bundle-dependencies
 python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-`dist/` 生成主 wheel 和 sdist；`release/wheels/` 放主 wheel、准确后端与平台依赖，`release/SHA256.json` 记录校验和。后端来源及快照摘要位于 `vendor/backend.json`。构建不提交代码、不推送 Git、不上传 PyPI。
+`dist/` 生成主 wheel 和 sdist；`release/wheels/` 放主 wheel、官方算法与平台依赖，`release/SHA256.json` 记录校验和。构建前会清理这些生成目录，避免旧依赖混入发行；算法来源位于 `vendor/image9grid.json`。构建不提交代码、不推送 Git、不上传 PyPI。
 
-本仓库与发行资产按 LICENSE 中的专有条款提供，并未授予开源许可；后端快照未发现可确认的许可文件，具体见 vendor/THIRD_PARTY_LICENSES.txt。本地版本号 `+loom.20261027` 的 companion wheel 随 GitHub Release 提供，不宣称已经发布到 PyPI。若未来选择 PyPI，需要另行安排可公开解析的后端版本及注册表许可元数据。源码包可独立重建主 wheel，并自带后端快照 wheel 供安装。
-
-安装、离线隔离、包资源、组件回归和真实引擎证明记录在验收报告中。模拟 AF 源验证导出链路，不代表所有真实设计稿的字体、特效和业务交互已验收。
+本仓库与发行资产按 LICENSE 中的专有条款提供，并未授予开源许可。内部序列化和通用辅助模块由原有已验证快照移植，来源及原始文件 SHA256 记录在 `vendor/prefab-origin.json`；不包含 PSD 读取器。官方算法 wheel 的来源、版本和 SHA 见 `vendor/image9grid.json`，其许可声明以官方发行内容为准，具体见 `vendor/THIRD_PARTY_LICENSES.txt`。源码包可独立重建主 wheel，并自带官方算法 wheel 供安装。旧版 v0.1.0 的 tag 和资产保留，不覆盖历史发行。

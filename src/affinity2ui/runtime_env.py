@@ -40,7 +40,8 @@ def setup_runtime(cache_dir=None):
 
 def doctor():
     from importlib.metadata import version
-    result = {'packageVersion': version('loom-affinity2ui'), 'backendVersion': version('psd2ui'),
+    result = {'packageVersion': version('loom-affinity2ui'),
+              'image9gridVersion': version('loom-image9grid'),
               'node': shutil.which('node'), 'npm': shutil.which('npm'),
               'runtimeDirectory': str(runtime_dir()), 'affinityEndpoint': 'http://[::1]:6767/sse'}
     try:

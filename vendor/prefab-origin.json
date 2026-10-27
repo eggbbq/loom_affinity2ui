@@ -1,0 +1,32 @@
+{
+  "upstream": "https://github.com/eggbbq/loom_psd2ui",
+  "sourceCommit": "b7545959c9ef714b980aab5ab49113c74000eacc",
+  "snapshotWheelSha256": "89736bcfe016b1fd3aa1fb5f1cdd257a696e750573e7a059f19b2efc3dba7d68",
+  "files": {
+    "prefab.py": {
+      "source": "laya_prefab.py",
+      "sourceSha256": "98894c62089fa4db2d33a8749cdc510be0b367d7cc87025d8cf718af0fb15594"
+    },
+    "laya_types.py": {
+      "source": "laya_types.py",
+      "sourceSha256": "9776620aecf7eefaf44fcb5836415f983fb829709cc6596d3776395a80cf7e08"
+    },
+    "naming.py": {
+      "source": "naming.py",
+      "sourceSha256": "bddf3228e2e7d9f538ee303c66b256f05f6563498bf0e60ec549c30df47b2bd7"
+    },
+    "layout_helpers.py": {
+      "source": "layout.py",
+      "sourceSha256": "d25063cbb32b49465cd8986051325bbbcb87b2f49823a1b0a922c531f413f7fb"
+    },
+    "image_dedupe.py": {
+      "source": "deduplication.py",
+      "sourceSha256": "fa59beb483d65a7458fd031a5fdad108fb306dd08bc104a3bf2c139d41d109b1"
+    }
+  },
+  "metadataFunction": {
+    "source": "run_export.py:103",
+    "function": "preserve_metadata"
+  },
+  "note": "Only source-independent prefab serialization, validation, naming, metadata and image dedupe helpers are retained. No PSD reader, CLI environment bootstrap or bundled ninegrid is included. Legacy UUID namespace, node IDs and JSON behavior are intentionally preserved. Upstream snapshot had no license declaration; no open-source permission is inferred."
+}

@@ -2,7 +2,7 @@
 import json
 from collections import defaultdict
 
-from psd2ui.deduplication import deduplicate_images
+from ..image_dedupe import deduplicate_images
 
 
 def plan(images, metadata, references, protected, preferred, threshold, origins=None):

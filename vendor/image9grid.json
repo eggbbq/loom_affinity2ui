@@ -1,0 +1,10 @@
+{
+  "distribution": "loom-image9grid",
+  "version": "1.1.0",
+  "file": "loom_image9grid-1.1.0-py3-none-any.whl",
+  "sha256": "dc63c5401f01d1410d8a83a91e882c1fae9994a97752c35dffb66ad063345cf6",
+  "release": "https://github.com/eggbbq/loom_image9grid/releases/tag/v1.1.0",
+  "url": "https://github.com/eggbbq/loom_image9grid/releases/download/v1.1.0/loom_image9grid-1.1.0-py3-none-any.whl",
+  "namespace": "ninegrid",
+  "note": "Official release wheel, unmodified; sole owner of ninegrid namespace and commands."
+}

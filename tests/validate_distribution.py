@@ -14,6 +14,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +34,17 @@ def main():
         raise SystemExit('Expected exactly one loom-affinity2ui wheel in '+str(wheelhouse))
     wheel = wheels[0]
     dependency_wheels = wheel.parent
+    grid_wheels=list(dependency_wheels.glob('loom_image9grid-1.1.0-*.whl'))
+    if len(grid_wheels)!=1:
+        raise SystemExit('Expected the official loom-image9grid 1.1.0 wheel')
+    grid_sha=hashlib.sha256(grid_wheels[0].read_bytes()).hexdigest()
+    if grid_sha!='dc63c5401f01d1410d8a83a91e882c1fae9994a97752c35dffb66ad063345cf6':
+        raise SystemExit('Official image9grid wheel checksum mismatch')
+    if list(dependency_wheels.glob('psd*.whl')):
+        raise SystemExit('Release wheelhouse contains retired PSD dependencies')
+    with zipfile.ZipFile(wheel) as package_wheel:
+        if any(name.startswith(('ninegrid/','psd2ui/','psd_tools/')) for name in package_wheel.namelist()):
+            raise SystemExit('Main wheel contains a dependency-owned namespace')
     environment = os.environ.copy()
     for key in ('PYTHONPATH','PYTHONHOME','VIRTUAL_ENV'):
         environment.pop(key, None)
@@ -57,6 +69,7 @@ def main():
         checked([python,'-m','pip','check'],workspace,'pip-check')
         code='''
 import importlib.metadata as metadata
+import importlib.util
 from importlib.resources import files
 import json,os,pathlib,sys
 before=os.getcwd()
@@ -67,15 +80,28 @@ import affinity2ui.shared_images.pipeline
 assert os.getcwd()==before
 assert pathlib.Path(affinity2ui.__file__).is_relative_to(pathlib.Path(sys.prefix))
 assert not pathlib.Path.cwd().joinpath('.venv').exists()
-assert metadata.version('psd2ui')=='1.1.0+loom.20261027'
+assert metadata.version('loom-affinity2ui')=='0.1.1'
+for removed in ('psd2ui','psd-tools'):
+ try: metadata.distribution(removed)
+ except metadata.PackageNotFoundError: pass
+ else: raise AssertionError('Retired PSD distribution installed: '+removed)
+assert importlib.util.find_spec('psd2ui') is None
+assert importlib.util.find_spec('psd_tools') is None
+assert metadata.version('loom-image9grid')=='1.1.0'
 package=files('affinity2ui')
 for resource in ('native.js','resize_probe.mjs','runtime/AffinityListDecoration.ts','runtime/package.json','runtime/package-lock.json'):
  assert package.joinpath(resource).is_file(),resource
 assert any(p.name.endswith('.toml') for p in package.joinpath('templates').iterdir())
-import psd2ui,ninegrid
-assert pathlib.Path(psd2ui.__file__).is_relative_to(pathlib.Path(sys.prefix))
+import ninegrid
 assert pathlib.Path(ninegrid.__file__).is_relative_to(pathlib.Path(sys.prefix))
-print(json.dumps({'package':affinity2ui.__file__,'backend':psd2ui.__file__,'backendVersion':metadata.version('psd2ui'),'cwdUnchanged':True}))
+owners=[]
+for distribution in metadata.distributions():
+ if any(str(f).replace('\\\\','/').startswith('ninegrid/') for f in distribution.files or []):
+  owners.append(distribution.metadata['Name'].lower().replace('_','-'))
+assert owners==['loom-image9grid'],owners
+requirements=metadata.requires('loom-affinity2ui') or []
+assert not any('psd2ui' in requirement.lower() or 'psd-tools' in requirement.lower() for requirement in requirements)
+print(json.dumps({'package':affinity2ui.__file__,'grid':ninegrid.__file__,'gridVersion':metadata.version('loom-image9grid'),'gridOwners':owners,'psdDependenciesAbsent':True,'cwdUnchanged':True}))
 '''
         checked([python,'-I','-c',code],workspace,'installed-import-resources')
         checked([cli,'--help'],workspace,'installed-cli-help')
@@ -127,6 +153,7 @@ Path(sys.argv[3]).write_text(json.dumps(result,ensure_ascii=False,indent=2))
              'isolatedVenv':True,'systemSitePackages':False,'pythonIsolatedMode':True,
              'outsideCheckout':True,'offlineInstallation':args.offline,'steps':steps,
              'engineCases':engine_result['engineCases'] if engine_result else 0,
+             'gridWheelSha256':grid_sha,'gridVersion':'1.1.0','psdDependenciesAbsent':True,
              'limits':['AF source is faked; native Affinity rendering has not been verified by these distribution tests.']}
     (output/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(summary,ensure_ascii=False,indent=2))

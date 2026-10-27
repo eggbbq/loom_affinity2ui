@@ -2,8 +2,8 @@
 import math
 import re
 
-from psd2ui.laya_prefab import validate_layout
-from psd2ui.naming import export_name
+from .prefab import validate_layout
+from .naming import export_name
 from .list_layout import LIST_KINDS, DECORATION_UUID, infer_list, is_cell, scroll_settings
 from .component_parts import bind_component_parts, plan_part_bindings
 from .alignment import CONTENT_ALIGN_X, CONTENT_ALIGN_Y, validate_axis_options
@@ -396,7 +396,7 @@ def apply_button_effects(prefab, default_effect=1):
 
 
 def patch_prefab(prefab, layout, parent=None, *, responsive=True, button_down_effect=1):
-    """Preserve project node interfaces while using PSD's serialized UI backend."""
+    """Preserve project node interfaces while applying native UI serialization."""
     if prefab['_$type'] == 'GBox':
         prefab['layout'] = {'type': 0}
     if prefab['_$type'] == 'GList':
