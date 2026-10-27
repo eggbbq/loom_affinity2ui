@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "version": "0.1.2",
+  "valid": true,
+  "date": "2026-10-27",
+  "unitTests": 120,
+  "legacySerializerGoldenCompatibility": true,
+  "repairProofAuditRegressionTests": 5,
+  "isolatedInstallationSteps": 17,
+  "engineCases": 8,
+  "engine": "LayaAir 3.4.2 / Chrome WebGL",
+  "algorithmVersion": 6,
+  "platform": "macOS arm64 / CPython 3.12",
+  "offlinePythonInstallAndSdistRebuild": true,
+  "nodeRuntimeCacheOutsidePackage": true,
+  "psdDependenciesAbsent": true,
+  "gridVersion": "1.1.0",
+  "gridNamespaceOwner": "loom-image9grid",
+  "limits": [
+    "AF source is faked; native Affinity rendering has not been verified by these distribution tests.",
+    "Node/npm runtime installation uses its own registry or cache."
+  ],
+  "artifacts": {
+    "loom_affinity2ui-0.1.2-py3-none-any.whl": "51a90ce40a5628984981666e02a8448fc73f05db955168d167fe45a57729a958",
+    "loom_image9grid-1.1.0-py3-none-any.whl": "dc63c5401f01d1410d8a83a91e882c1fae9994a97752c35dffb66ad063345cf6",
+    "loom_affinity2ui-0.1.2.tar.gz": "7fd332bcbf1d11610861a022f531e5f19b1a2fc1ce053064aa47abf785faf7a4"
+  }
+}

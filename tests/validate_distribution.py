@@ -80,7 +80,7 @@ import affinity2ui.shared_images.pipeline
 assert os.getcwd()==before
 assert pathlib.Path(affinity2ui.__file__).is_relative_to(pathlib.Path(sys.prefix))
 assert not pathlib.Path.cwd().joinpath('.venv').exists()
-assert metadata.version('loom-affinity2ui')=='0.1.1'
+assert metadata.version('loom-affinity2ui')=='0.1.2'
 for removed in ('psd2ui','psd-tools'):
  try: metadata.distribution(removed)
  except metadata.PackageNotFoundError: pass
@@ -113,6 +113,9 @@ print(json.dumps({'package':affinity2ui.__file__,'grid':ninegrid.__file__,'gridV
         fixture = temporary/'test_installed_api.py'
         shutil.copy2(ROOT/'tests/test_public_api.py',fixture)
         checked([python,'-I',fixture,'-v'],workspace,'installed-api-transactions')
+        audit_fixture=temporary/'test_installed_audit.py'
+        shutil.copy2(ROOT/'tests/test_affinity_audit.py',audit_fixture)
+        checked([python,'-I',audit_fixture,'-v'],workspace,'installed-audit-provenance')
         cli_probe=temporary/'installed-cli-smoke.py'
         shutil.copy2(ROOT/'tests/installed_cli_smoke.py',cli_probe)
         checked([python,'-I',cli_probe,fixture,temporary/'cli-input'],workspace,'installed-cli-plan-config')

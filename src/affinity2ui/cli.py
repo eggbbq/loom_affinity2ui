@@ -18,7 +18,7 @@ def similarity(value):
 def parser():
     result = argparse.ArgumentParser(description='Affinity → LayaAir UI 独立导出工具')
     result.add_argument('--workspace', type=Path, default=Path.cwd())
-    result.add_argument('--version', action='version', version='loom-affinity2ui 0.1.1')
+    result.add_argument('--version', action='version', version='loom-affinity2ui 0.1.2')
     commands = result.add_subparsers(dest='command', required=True)
     def command(name, help):
         child = commands.add_parser(name, help=help)

@@ -10,7 +10,7 @@
 
 ## 安装发行包
 
-正式发行渠道为 [GitHub Release v0.1.1](https://github.com/eggbbq/loom_affinity2ui/releases/tag/v0.1.1)，未发布到 PyPI。预制体序列化、布局验证、资源 metadata 和相似图去重由本库内部模块实现，不安装或导入 `psd2ui`、`psd-tools`。保留已有 UUID 命名空间、节点 ID 和组件规则，升级不会因为模块归属变化而重建资源身份。
+正式发行渠道为 [GitHub Release v0.1.2](https://github.com/eggbbq/loom_affinity2ui/releases/tag/v0.1.2)，未发布到 PyPI。预制体序列化、布局验证、资源 metadata 和相似图去重由本库内部模块实现，不安装或导入 `psd2ui`、`psd-tools`。保留已有 UUID 命名空间、节点 ID 和组件规则，升级不会因为模块归属变化而重建资源身份。
 
 九宫格来自独立的 [loom-image9grid v1.1.0](https://github.com/eggbbq/loom_image9grid/releases/tag/v1.1.0)，官方 wheel 保持原样，SHA256 固定为 `dc63c5401f01d1410d8a83a91e882c1fae9994a97752c35dffb66ad063345cf6`。算法命名空间 `ninegrid` 的唯一提供者为 `loom-image9grid==1.1.0`。升级旧环境时建议重新创建虚拟环境，避免旧版 psd2ui 内置的同名文件残留。
 
@@ -20,17 +20,17 @@
 python3.12 -m venv .venv
 .venv/bin/python -m pip install \
   'https://github.com/eggbbq/loom_image9grid/releases/download/v1.1.0/loom_image9grid-1.1.0-py3-none-any.whl' \
-  'https://github.com/eggbbq/loom_affinity2ui/releases/download/v0.1.1/loom_affinity2ui-0.1.1-py3-none-any.whl'
+  'https://github.com/eggbbq/loom_affinity2ui/releases/download/v0.1.2/loom_affinity2ui-0.1.2-py3-none-any.whl'
 ```
 
 发布资产中的 `SHA256.json` 记录主包、源码包及 wheel bundle 的逐文件校验和。用于工程锁定时，应下载发行资产并同时校验固定 SHA256，不从开发分支或本机目录隐式加载。
 
-macOS arm64 / CPython 3.12 可下载同一 Release 中的 `loom-affinity2ui-0.1.1-macos-arm64-cp312.zip`，解压后按下方离线安装方式使用；Node/npm 验证运行时仍需单独安装或使用本机缓存。
+macOS arm64 / CPython 3.12 可下载同一 Release 中的 `loom-affinity2ui-0.1.2-macos-arm64-cp312.zip`，解压后按下方离线安装方式使用；Node/npm 验证运行时仍需单独安装或使用本机缓存。
 
 ```sh
 python3.12 -m venv .venv
 # release/wheels 中提供主包、官方算法及当前构建平台的全部 Python 依赖。
-.venv/bin/python -m pip install --no-index --find-links /path/to/release/wheels loom-affinity2ui==0.1.1
+.venv/bin/python -m pip install --no-index --find-links /path/to/release/wheels loom-affinity2ui==0.1.2
 .venv/bin/affinity2ui --version
 .venv/bin/affinity2ui doctor
 ```
@@ -38,7 +38,7 @@ python3.12 -m venv .venv
 也可单独安装两个纯 Python wheel，让 pip 从已有镜像解析其常规依赖：
 
 ```sh
-python -m pip install loom_image9grid-1.1.0-py3-none-any.whl loom_affinity2ui-0.1.1-py3-none-any.whl
+python -m pip install loom_image9grid-1.1.0-py3-none-any.whl loom_affinity2ui-0.1.2-py3-none-any.whl
 ```
 
 主包与算法 wheel 是跨平台的 Python 包；离线 bundle 中 NumPy/Pillow 等二进制 wheels 对应打包时的 Python 和平台。其它环境需要重新下载适用的依赖 wheels。
